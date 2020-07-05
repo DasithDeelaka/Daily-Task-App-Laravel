@@ -23,15 +23,8 @@ class TaskController extends Controller
 
          $task->task=$request->task;
         $task->save();
-
-        $data=Task::all();
-       // dd($data);
-
-       return view('tasks')->with('tasks',$data);
-
-
-
-        //dd($request->all());
+        
+        return redirect()->back();
 
 
     }
@@ -74,14 +67,19 @@ class TaskController extends Controller
 
   }
   public function updatetask(Request $request){
+      
+      // Form validation
+        $this->validate($request, [
+            'task'=>'required|max:100|min:5'
+        ]);
+
 
             $id=$request->id;
             $task=$request->task;
             $data=Task::find($id);
             $data->task=$task;
             $data->save();
-            $datas=Task::all();
-            return view('tasks')->with('tasks',$datas);
+            return redirect('/tasks');
 
 
 
